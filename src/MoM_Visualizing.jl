@@ -26,8 +26,10 @@ linestyles  =   CircularVector([:solid, :dashdotdot, :dash, :dot, :dashdot])
 markers     =   CircularVector([:circle, :star4, :diamond, :rtriangle, :rect, :pentagon, :cross, :star5])
 colormap    =   CircularVector(colorschemes[:Set1_9][[2, 5, 4, 9, 1, 8, 3, 6, 7]])
 colormap3d  =   ColorScheme(vcat(range(colorant"blue", colorant"gold", length=50), range(colorant"gold", colorant"red", length=50)))
-theme3d     =   Theme(font = "Times New Roman Bold", fontsize = 8.5, figure_padding = (5, 10, 5, 10), 
-                        draw_fullscreen=true, float=true, oit=true)
+# 3D 绘图主题：仅定制字体等基本外观，避免为具体绘图类型设置
+# 已在 Makie 0.24 中废弃或不再适用于 `Surface` 的光照属性（如 `ambient`, `lightposition`）
+# 交由 Makie 的默认 3D 配置处理，避免验证时报错。
+theme3d     =   Theme(font = "Times New Roman Bold", fontsize = 8.5, figure_padding = (5, 10, 5, 10))
 
 # 点线绘图模板
 include("lines_plot.jl")

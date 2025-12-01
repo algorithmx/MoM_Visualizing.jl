@@ -27,6 +27,8 @@ function farfield3D(θs, ϕs, data; size_inches = (3.5, 2.4), label = "RCS(dB)",
     xlim = nothing, ylim = nothing, zlim = nothing, showlegend = true, dpi = 300, cmap = colormap3d)
     
     GLMakie.activate!()
+    # 重置为干净的基础主题，随后只叠加我们自定义的 3D 外观，避免遗留光照属性（ambient, lightposition）
+    set_theme!(Theme())
     set_theme!(theme3d)
 
     # xyz网格坐标
@@ -42,8 +44,7 @@ function farfield3D(θs, ϕs, data; size_inches = (3.5, 2.4), label = "RCS(dB)",
     data_normalized = data .- minimum(data)
 
     pltobj = surface!(axs, data_normalized .* x, data_normalized .* y, data_normalized .* z; color = data, colormap = cmap, 
-                        lightposition = CairoMakie.Vec3f(0, 0, 0), ambient = CairoMakie.Vec3f(0.65, 0.65, 0.65),
-                        backlight = 5.0f0, shading = MultiLightShading)
+                        backlight = 5.0f0, shading = true)
     Colorbar(fig[1, 2], pltobj, label = label, tickwidth = 2, tickalign = 1, width = 25, ticksize = 3.2/25.4*dpi, height = Relative(0.5))
 
     # hidedecorations!(axs)
